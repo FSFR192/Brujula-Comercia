@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Brújula Comercial"
+description = "Herramienta de simulación para priorizar oportunidades de inclusión financiera en La Libertad y comparar esquemas de incentivos comerciales con datos sintéticos."
+version = "1.0.0"
+id = "artifacts/brujula-comercial"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25839
+
+[services.development]
+run = "pnpm --filter @workspace/brujula-comercial run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/brujula-comercial", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/brujula-comercial/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25839"
+BASE_PATH = "/"
